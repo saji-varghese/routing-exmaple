@@ -1,0 +1,10 @@
+[
+  {
+    "filters": {
+      "ce-source": "/mobile/skybet/ios",
+      "ce-type": "sports.recommendation.request",
+      "ce-subject": "football"
+    },
+    "endpoint": "http://localhost/post"
+  }
+]
