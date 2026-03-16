@@ -7,6 +7,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
@@ -24,8 +25,10 @@ import org.jboss.logging.Logger;
 
 @ApplicationScoped
 @Path("/v1")
-@Consumes(MediaType.APPLICATION_OCTET_STREAM)
-@Produces(MediaType.APPLICATION_OCTET_STREAM)
+//@Consumes(MediaType.APPLICATION_OCTET_STREAM)
+//@Produces(MediaType.APPLICATION_OCTET_STREAM)
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class Router {
 
   private static final Logger LOGGER = Logger.getLogger(Router.class);
@@ -76,6 +79,8 @@ public class Router {
         .filter(r -> r.matches(attrs))
         .findFirst();
 
+
+
     matching.ifPresent(r -> LOGGER.infof("Matched rule: %s", r));
 
     String endpoint = matching
@@ -88,7 +93,11 @@ public class Router {
       Response upstream = client.forward(endpoint, body);
       LOGGER.infof("Upstream status: %d", upstream.getStatus());
       return Response.fromResponse(upstream).build();
-    } catch (Exception e) {
+    }catch (WebApplicationException e) {
+      LOGGER.errorf(e, "Failed to forward request to %s", endpoint);
+      return Response.fromResponse(e.getResponse()).build();
+    }
+    catch (Exception e) {
       LOGGER.errorf(e, "Failed to forward request to %s", endpoint);
       return Response.serverError().build();
     }

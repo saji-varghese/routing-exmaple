@@ -1,10 +1,10 @@
 [
   {
     "filters": {
-      "ce-source": "/mobile/skybet/ios",
-      "ce-type": "sports.recommendation.request",
-      "ce-subject": "football"
+      "ce-source": "urn:uki:pop:gaming:mobile:ios",
+      "ce-type": "uki.pop.gaming.recommendation.request",
+      "ce-subject": "gaming-magic-row"
     },
-    "endpoint": "http://localhost/post"
+    "endpoint": "http://localhost:8081/v1/decision"
   }
 ]

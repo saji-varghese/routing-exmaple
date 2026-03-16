@@ -16,7 +16,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface DecisionClient {
 
   @POST
-  @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-  @Produces(MediaType.APPLICATION_OCTET_STREAM)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
   Response forward(@Url String url, java.io.InputStream body);
 }
