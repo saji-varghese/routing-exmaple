@@ -56,37 +56,10 @@ public final class CloudEventHeaderUtils {
 
       String lower = name.toLowerCase(Locale.ROOT);
 
-      if (lower.startsWith(CE_PREFIX)) {
-        if (values != null && !values.isEmpty()) {
+      if (lower.startsWith(CE_PREFIX) && values != null && !values.isEmpty()) {
           result.put(lower, values.getFirst());
         }
-      }
-    });
 
-    return result;
-  }
-
-  /**
-   * Extract CloudEvent attributes from a simple Map of headers.
-   */
-  public static Map<String, String> extract(Map<String, String> headers) {
-
-    Map<String, String> result = new HashMap<>();
-
-    if (headers == null) {
-      return result;
-    }
-
-    headers.forEach((name, value) -> {
-      if (name == null) {
-        return;
-      }
-
-      String lower = name.toLowerCase(Locale.ROOT);
-
-      if (lower.startsWith(CE_PREFIX)) {
-        result.put(lower, value);
-      }
     });
 
     return result;
